@@ -5,26 +5,26 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct position {
+typedef struct stPosition {
     int numero_ligne;
     int ordre;
     int numero_phrase;
-    struct position* suivant;
+    struct stPosition* suivant;
 } Position;
 
-typedef struct listePosition {
+typedef struct stListePosition {
     Position* debut;
     int nb_elements;
 } ListePosition;
 
-typedef struct noeudABR {
+typedef struct stNoeudABR {
     char* mot;
     ListePosition positions;
-    struct noeudABR* filsGauche;
-    struct noeudABR* filsDroit;
+    struct stNoeudABR* filsGauche;
+    struct stNoeudABR* filsDroit;
 } NoeudABR;
 
-typedef struct arbreBR {
+typedef struct stArbreBR {
     NoeudABR* racine;
     int nb_mots_differents;
     int nb_mots_total;
@@ -32,6 +32,5 @@ typedef struct arbreBR {
 
 ArbreBR *creer_abr();
 int ajouter_noeud(ArbreBR *arbre, NoeudABR *noeud);
-NoeudABR *rechercher_noeud(ArbreBR *arbre, char *mot);
 
 #endif // ARBRE_H_INCLUDED

@@ -3,7 +3,7 @@
 
 ArbreBR *creer_abr() //COMPLET, A TESTER
 {
-    ArbreBR *a = (ArbreBR)malloc(sizeof(ArbreBR));
+    ArbreBR *a = (ArbreBR*)malloc(sizeof(ArbreBR));
     if (a == NULL)
         return NULL;
     else
