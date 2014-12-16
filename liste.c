@@ -54,16 +54,16 @@ int ajouter_position(ListePosition *listeP, int ligne, int ordre, int num_phrase
     }
 
 
-    while ( (ptr->suivant != NULL) && ((p->numero_ligne > ptr->suivant->numero_ligne) | ((p->numero_ligne == ptr->suivant->numero_ligne) && (p->ordre > ptr->suivant->ordre)))           )
+    while ( (ptr->suivant != NULL) && ((p->numero_ligne > ptr->suivant->numero_ligne) || ((p->numero_ligne == ptr->suivant->numero_ligne) && (p->ordre > ptr->suivant->ordre)))           )
         // fin de chaine ou ((ligne plus petit) ou (ligne egale et ordre plus petit))
         ptr = ptr->suivant;
 
     if (ptr->suivant == NULL)
     {
-          ptr->suivant = p;
-    listeP->nb_elements++;
-    printf("Ajoute \n");
-    return 1;
+        ptr->suivant = p;
+        listeP->nb_elements++;
+        printf("Ajoute \n");
+        return 1;
     }
 
     if ((p->numero_ligne == ptr->suivant->numero_ligne) && (p->ordre == ptr->suivant->ordre))
@@ -81,10 +81,6 @@ int ajouter_position(ListePosition *listeP, int ligne, int ordre, int num_phrase
 
         return 1;
     }
-
-    // if (ptre->suivant == NULL)
-
-
 }
 
 Position* creer_position(int ligne, int ordre, int num_phrase)
@@ -122,7 +118,6 @@ void afficher_liste(ListePosition *l)
     Position* p = l->debut;
     while (p != NULL)
     {
-        printf ("\n" );
         afficher_position(p);
         p=p->suivant;
     }
@@ -136,7 +131,7 @@ void afficher_position(Position *p)
         printf("Cette position n'existe pas\n");
     else
     {
-        printf("Ligne : %d, Ordre : %d, Phrase :%d ", p->numero_ligne, p->ordre, p->numero_phrase);
+        printf("Ligne : %d, Ordre : %d, Phrase :%d\n", p->numero_ligne, p->ordre, p->numero_phrase);
     }
     return;
 }

@@ -1,6 +1,7 @@
 #include "outils.h"
-#define MAX_LIGNE 500
+#define MAX_CHAR 500
 
+/*
 int charger_fichier(ArbreBR *arbre, char *filename){ //INCOMPLET LULZ
     FILE* fichier= fopen(filename, "r");
     if (fichier == NULL){
@@ -8,13 +9,48 @@ int charger_fichier(ArbreBR *arbre, char *filename){ //INCOMPLET LULZ
         return -1;
     }
     else {
-
         char buff[MAX_LIGNE] = "";
         while (fgets(buff, MAX_LIGNE, fichier) != NULL) //lecture du fichier jusqu'à sa fin
         {
-            /**
-            opérations sur buff, qui contiendra chaque mot
-            */
+
+        }
+        fclose(fichier);
+    }
+}
+*/
+
+int charger_fichier(ArbreBR *arbre, char *filename){ //INCOMPLET LULZ
+    FILE* fichier= fopen(filename, "r");
+    char c;
+    if (fichier == NULL){
+        printf("Erreur ouverture du fichier\n");
+        return -1;
+    }
+    else {
+        char buff[MAX_CHAR];
+        int i = 0;
+        int phrase = 1;
+        int ligne = 0;
+        while (fgets(buff, MAX_CHAR, fichier) != NULL) //lecture du fichier jusqu'à sa fin
+        {
+            ligne++;
+            while (buff[i] != '\n') ///Ajouter le cas d'un surplus ?
+                {
+                    int ordre = 0;
+                    char mot[30] = "";
+                    int j = 0;
+                    ordre++;
+                    while (buff[i] != ' ' && buff[i] != '.' )
+                        {
+
+                            mot[j] = buff[i];
+                            ordre++;
+                            j++;
+                            i++;
+                        }
+                    NoeudABR* noeud = creer_noeud(mot, ligne, ordre, phrase);
+                    ajouter_noeud(arbre, noeud);
+                }
         }
         fclose(fichier);
     }

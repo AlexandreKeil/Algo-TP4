@@ -1,0 +1,27 @@
+# depslib dependency file v1.0
+1418751100 source:c:\users\alexandre\documents\github\algo-tp4\arbre.c
+	"arbre.h"
+	"liste.h"
+
+1418750920 c:\users\alexandre\documents\github\algo-tp4\arbre.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1418712582 c:\users\alexandre\documents\github\algo-tp4\liste.h
+	"arbre.h"
+
+1418745875 source:c:\users\alexandre\documents\github\algo-tp4\liste.c
+	"liste.h"
+
+1418712582 source:c:\users\alexandre\documents\github\algo-tp4\outils.c
+	"outils.h"
+
+1418712582 c:\users\alexandre\documents\github\algo-tp4\outils.h
+	"arbre.h"
+
+1418750588 source:c:\users\alexandre\documents\github\algo-tp4\main.c
+	"arbre.h"
+	"liste.h"
+	"outils.h"
+

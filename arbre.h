@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+
 typedef struct stPosition {
     int numero_ligne;
     int ordre;
@@ -19,7 +20,7 @@ typedef struct stListePosition {
 
 typedef struct stNoeudABR {
     char* mot;
-    ListePosition positions;
+    ListePosition* positions;
     struct stNoeudABR* filsGauche;
     struct stNoeudABR* filsDroit;
 } NoeudABR;
@@ -32,5 +33,6 @@ typedef struct stArbreBR {
 
 ArbreBR *creer_abr();
 int ajouter_noeud(ArbreBR *arbre, NoeudABR *noeud);
+NoeudABR* creer_noeud(char* mot, int ligne, int ordre,  int phrase);
 
 #endif // ARBRE_H_INCLUDED

@@ -5,9 +5,11 @@
 
 int main()
 {
-    ArbreBR *a;
-    char nomFichier[TAILLE_NOM_FICHIER];
+    ArbreBR *a = creer_abr();
+    char nomFichier[TAILLE_NOM_FICHIER] = "fichier.txt" ;
+    charger_fichier(a, nomFichier);
 
+    /*
 
     printf("Arbres binaires de recherche - Indexation d'un texte\n");
     affichageMenu();
@@ -39,8 +41,15 @@ int main()
         if (charger_fichier(a, nomFichier) >= 0){
             printf("Reussite\n");
         } else
-            printf("Echech\n");
+            printf("Echec\n");
         break;
     }
+    */
+    Position* p1 = creer_position(1, 5, 7);
+    Position* p2 = creer_position(1, 2, 3);
+    Position* p3 = creer_position(5, 6, 7);
+    afficher_position(p1);
+    afficher_position(p2);
+    afficher_position(p3);
     return 0;
 }
