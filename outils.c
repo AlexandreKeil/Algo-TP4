@@ -1,5 +1,5 @@
 #include "outils.h"
-#define MAX_CHAR 500
+#define MAX_CHAR 50
 
 /*
 int charger_fichier(ArbreBR *arbre, char *filename){ //INCOMPLET LULZ
@@ -19,41 +19,50 @@ int charger_fichier(ArbreBR *arbre, char *filename){ //INCOMPLET LULZ
 }
 */
 
-int charger_fichier(ArbreBR *arbre, char *filename){ //INCOMPLET LULZ
-    FILE* fichier= fopen(filename, "r");
+int charger_fichier(ArbreBR *arbre, char *filename){
+    FILE* fichier= fopen(filename, "r"); // pointeur sur le fichier ouvert
     char c;
+    int nb_mots = 0;
     if (fichier == NULL){
-        printf("Erreur ouverture du fichier\n");
+        printf("Erreur d'ouverture du fichier\n");
         return -1;
     }
     else {
-        char buff[MAX_CHAR];
-        int i = 0;
         int phrase = 1;
-        int ligne = 0;
-        while (fgets(buff, MAX_CHAR, fichier) != NULL) //lecture du fichier jusqu'à sa fin
-        {
-            ligne++;
-            while (buff[i] != '\n') ///Ajouter le cas d'un surplus ?
-                {
-                    int ordre = 0;
-                    char mot[30] = "";
-                    int j = 0;
-                    ordre++;
-                    while (buff[i] != ' ' && buff[i] != '.' )
-                        {
+        int ligne = 1;
 
-                            mot[j] = buff[i];
-                            ordre++;
-                            j++;
+        char c = getc(fichier);
+
+        while (c != EOF) //lecture du fichier jusqu'à sa fin
+        {
+           int ordre = 1;
+            while (c != '\n' && c != EOF ) // Boucle pour les lignes
+                {
+                    char mot[30] = "";
+                    int i = 0;
+                    while ( c != ' ' && c != '.' && c != EOF && c != '\n')
+                        {
+                            mot[i] = c;
                             i++;
+                            c = getc(fichier);
                         }
+                    if (c == '.')
+                        phrase++;
+
                     NoeudABR* noeud = creer_noeud(mot, ligne, ordre, phrase);
                     ajouter_noeud(arbre, noeud);
+                    ordre++;
+                    nb_mots++;
+                    if (c != EOF)  // sinon on ne s'arrête jamais
+                        c = getc(fichier);
                 }
+        ligne++;
+        if (c != EOF)
+            c= getc(fichier);
         }
         fclose(fichier);
     }
+    return nb_mots;
 }
 
 void affichageMenu(){

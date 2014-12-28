@@ -17,12 +17,15 @@ ArbreBR *creer_abr() //COMPLET, A TESTER
 
 int ajouter_noeud(ArbreBR *arbre, NoeudABR *noeud) //INCOMPLET
 {
-    //Cas où l'ABR est vide
+    if (noeud == NULL)
+        return 0;
+
+       //Cas où l'ABR est vide
     if (arbre->racine == NULL)
     {
         arbre->racine = noeud;
         printf("Ajout du noeud dans l'arbre initialement vide\n");
-//        ajouter_position(noeud->positions, noeud->positions->debut->numero_ligne, noeud->positions->debut->ordre, noeud->positions->debut->numero_phrase);
+        arbre->racine = noeud ;
         return 1; //Réussite
     }
     else
@@ -43,7 +46,10 @@ int ajouter_noeud(ArbreBR *arbre, NoeudABR *noeud) //INCOMPLET
         }
         if (strcasecmp(noeud->mot, x->mot) == 0)  //la boucle s'arrête car le mot existe dans l'un des noeuds
         {
-            ajouter_position(x->positions, noeud->positions->debut->numero_ligne, noeud->positions->debut->ordre, noeud->positions->debut->numero_phrase);
+            ListePosition *l = creer_liste_positions();
+            ajouter_position(l, x->positions.debut->numero_ligne, x->positions.debut->ordre, x->positions.debut->numero_phrase);
+            ajouter_position(l, noeud->positions.debut->numero_ligne, noeud->positions.debut->ordre, noeud->positions.debut->numero_phrase);
+            x->positions = *l ;
         }
         else   //la boucle s'arrête car on est arrivé au bout de l'arbre
         {
@@ -74,7 +80,30 @@ NoeudABR* creer_noeud(char* mot, int ligne, int ordre, int phrase)
         noeud->filsGauche=NULL;
         ListePosition *pos = creer_liste_positions();
         ajouter_position(pos, ligne, ordre, phrase);
-        noeud->positions = pos;
+        noeud->positions = *pos;
         noeud->mot = mot;
         return noeud;
+}
+
+
+
+
+void afficher_arbre(ArbreBR arbre)
+{
+    if (arbre.racine == NULL)
+        printf("\n");
+
+    else
+    {
+        ArbreBR *SousArbreGauche = creer_abr();
+        ArbreBR *SousArbreDroit = creer_abr();
+        SousArbreGauche = arbre.racine->filsDroit;
+        SousArbreGauche = arbre.racine->filsGauche;
+
+        afficher_arbre(*SousArbreGauche);
+        printf("%s",arbre.racine->mot);
+        afficher_arbre(*SousArbreDroit);
+    }
+
+    return;
 }

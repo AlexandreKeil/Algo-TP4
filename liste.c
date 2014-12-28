@@ -135,5 +135,3 @@ void afficher_position(Position *p)
     }
     return;
 }
-
-

@@ -20,7 +20,7 @@ typedef struct stListePosition {
 
 typedef struct stNoeudABR {
     char* mot;
-    ListePosition* positions;
+    ListePosition positions;
     struct stNoeudABR* filsGauche;
     struct stNoeudABR* filsDroit;
 } NoeudABR;
@@ -34,5 +34,5 @@ typedef struct stArbreBR {
 ArbreBR *creer_abr();
 int ajouter_noeud(ArbreBR *arbre, NoeudABR *noeud);
 NoeudABR* creer_noeud(char* mot, int ligne, int ordre,  int phrase);
-
+void afficher_arbre(ArbreBR arbre);
 #endif // ARBRE_H_INCLUDED
