@@ -35,4 +35,5 @@ ArbreBR *creer_abr();
 int ajouter_noeud(ArbreBR *arbre, NoeudABR *noeud);
 NoeudABR* creer_noeud(char* mot, int ligne, int ordre,  int phrase);
 void afficher_arbre(ArbreBR arbre);
+int inserer_noeud(NoeudABR** n, NoeudABR* noeud);
 #endif // ARBRE_H_INCLUDED

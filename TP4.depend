@@ -25,11 +25,11 @@
 	"liste.h"
 	"outils.h"
 
-1419803407 source:c:\users\florian\documents\github\algo-tp4\arbre.c
+1419893523 source:c:\users\florian\documents\github\algo-tp4\arbre.c
 	"arbre.h"
 	"liste.h"
 
-1419801075 c:\users\florian\documents\github\algo-tp4\arbre.h
+1419889671 c:\users\florian\documents\github\algo-tp4\arbre.h
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -40,14 +40,14 @@
 1419801103 source:c:\users\florian\documents\github\algo-tp4\liste.c
 	"liste.h"
 
-1419799644 source:c:\users\florian\documents\github\algo-tp4\main.c
+1419892056 source:c:\users\florian\documents\github\algo-tp4\main.c
 	"arbre.h"
 	"liste.h"
 	"outils.h"
 
-1418769290 c:\users\florian\documents\github\algo-tp4\outils.h
+1419891496 c:\users\florian\documents\github\algo-tp4\outils.h
 	"arbre.h"
 
-1419799619 source:c:\users\florian\documents\github\algo-tp4\outils.c
+1419892902 source:c:\users\florian\documents\github\algo-tp4\outils.c
 	"outils.h"
 

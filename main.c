@@ -5,6 +5,18 @@
 
 int main()
 {
+    menu();
+
+
+
+    /*
+    int *p;
+    int x = 7;
+    p = &x;
+
+    printf("p = %d, *p = %d ", p, *p);
+
+
     ArbreBR *a = creer_abr();
     char nomFichier[TAILLE_NOM_FICHIER] = "fichier.txt" ;
     charger_fichier(a, nomFichier);
@@ -44,7 +56,8 @@ int main()
             printf("Echec\n");
         break;
     }
-    */
+
+
     Position* p1 = creer_position(1, 5, 7);
     Position* p2 = creer_position(1, 2, 3);
     Position* p3 = creer_position(5, 6, 7);
@@ -59,7 +72,7 @@ int main()
     ajouter_position(l, 5, 5, 7);
 
     afficher_liste(l);
-
+*/
 
     return 0;
 }

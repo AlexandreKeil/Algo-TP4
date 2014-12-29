@@ -15,48 +15,63 @@ ArbreBR *creer_abr() //COMPLET, A TESTER
     }
 }
 
-int ajouter_noeud(ArbreBR *arbre, NoeudABR *noeud) //INCOMPLET
+int is_equilibre(ArbreBR * arbre)
 {
-    if (noeud == NULL)
+    ///A FAIRE
+}
+
+
+int ajouter_noeud(ArbreBR *arbre, NoeudABR *noeud)
+{
+
+     if (noeud == NULL)
         return 0;
 
        //Cas où l'ABR est vide
     if (arbre->racine == NULL)
     {
         arbre->racine = noeud;
+        arbre->nb_mots_differents++;
+        arbre->nb_mots_total++;
         printf("Ajout du noeud dans l'arbre initialement vide\n");
-        arbre->racine = noeud ;
         return 1; //Réussite
     }
     else
     {
-        NoeudABR* x, *y;
-        x = arbre->racine;
-        while (x != NULL && strcasecmp(noeud->mot, x->mot) != 0)
-        {
-            y = x;
-            if (strcasecmp(noeud->mot, x->mot) < 0)  //nouveau mot "avant" le mot testé
-            {
-                x = x->filsGauche;
-            }
-            else if (strcasecmp(noeud->mot, x->mot) > 0)  //nouveau mot "apres" le mot testé
-            {
-                x = x->filsDroit;
-            }
-        }
-        if (strcasecmp(noeud->mot, x->mot) == 0)  //la boucle s'arrête car le mot existe dans l'un des noeuds
-        {
+        int different = inserer_noeud (&arbre->racine, noeud);// on utilise un pointeur de pointeur pour modifier la valeur contenue par le pointeur
+        arbre->nb_mots_differents= arbre->nb_mots_differents + different ;
+        arbre->nb_mots_total++;
+        return 1;
+    }
+
+
+}
+
+int inserer_noeud (NoeudABR **n, NoeudABR *noeud) // retourne 1 si nouveau mot, 0 si dejà dans l'arbre
+{
+    if (*n == NULL)
+    {
+        *n = noeud;
+        return 1;
+    }
+
+    if (strcasecmp(noeud->mot, (*n)->mot)<0)
+        return inserer_noeud (&(*n)->filsGauche, noeud);
+
+    if (strcasecmp(noeud->mot, (*n)->mot)>0)
+         return inserer_noeud (&(*n)->filsDroit, noeud);
+
+    else // le mot est déjà inséré
+    {
             ListePosition *l = creer_liste_positions();
-            ajouter_position(l, x->positions.debut->numero_ligne, x->positions.debut->ordre, x->positions.debut->numero_phrase);
+            ajouter_position(l, (*n)->positions.debut->numero_ligne, (*n)->positions.debut->ordre, (*n)->positions.debut->numero_phrase);
             ajouter_position(l, noeud->positions.debut->numero_ligne, noeud->positions.debut->ordre, noeud->positions.debut->numero_phrase);
-            x->positions = *l ;
-        }
-        else   //la boucle s'arrête car on est arrivé au bout de l'arbre
-        {
-            x = noeud;
-        }
+            (*n)->positions = *l ;
+            return 0;
     }
 }
+
+
 
 NoeudABR *rechercher_noeud(ArbreBR *arbre, char *mot){ //COMPLET, A TESTER
     NoeudABR *x = arbre->racine;
@@ -81,28 +96,47 @@ NoeudABR* creer_noeud(char* mot, int ligne, int ordre, int phrase)
         ListePosition *pos = creer_liste_positions();
         ajouter_position(pos, ligne, ordre, phrase);
         noeud->positions = *pos;
-        noeud->mot = mot;
+        noeud->mot = malloc( 30*sizeof(char));
+        strcpy(noeud->mot, mot);
         return noeud;
 }
 
+/// PENSER A FREE (noeud -> mot ) dans DETRUIRE NOEUD
 
-
+int profondeur(ArbreBR* arbre)
+{
+    if (arbre == NULL || arbre->racine == NULL)
+        return -1;
+    if (arbre->racine->filsDroit == NULL && arbre->racine->filsGauche == NULL)
+        return 0;
+    else
+    {
+        ArbreBR *SADroit = creer_abr();
+        ArbreBR *SAGauche = creer_abr();
+        SADroit->racine = arbre->racine->filsDroit;
+        SAGauche->racine = arbre->racine->filsGauche;
+        return max(profondeur(SADroit),profondeur(SAGauche)) + 1;
+    }
+}
 
 void afficher_arbre(ArbreBR arbre)
 {
-    if (arbre.racine == NULL)
-        printf("\n");
-
-    else
+    if (arbre.racine != NULL)
     {
-        ArbreBR *SousArbreGauche = creer_abr();
-        ArbreBR *SousArbreDroit = creer_abr();
-        SousArbreGauche = arbre.racine->filsDroit;
-        SousArbreGauche = arbre.racine->filsGauche;
 
-        afficher_arbre(*SousArbreGauche);
-        printf("%s",arbre.racine->mot);
-        afficher_arbre(*SousArbreDroit);
+    ArbreBR *SAGauche = creer_abr();
+    ArbreBR *SADroit = creer_abr();
+    SAGauche->racine = arbre.racine->filsGauche;
+    SADroit->racine = arbre.racine->filsDroit;
+
+
+    afficher_arbre(*SAGauche);
+
+
+    printf("- %s\n",arbre.racine->mot);
+
+
+    afficher_arbre(*SADroit);
     }
 
     return;
