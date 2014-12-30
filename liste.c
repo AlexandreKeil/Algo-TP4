@@ -100,22 +100,22 @@ Position* creer_position(int ligne, int ordre, int num_phrase)
     return p;
 }
 
-void afficher_liste(ListePosition *l)
+void afficher_liste(ListePosition l)
 {
-    if (l == NULL)
+   /* if (l.debut == NULL)
     {
         printf("La liste n'existe pas \n");
         return;
     }
+    */
 
-
-    if (l->debut == NULL)
+    if (l.debut == NULL)
     {
         printf("La liste est vide \n");
         return;
     }
 
-    Position* p = l->debut;
+    Position* p = l.debut;
     while (p != NULL)
     {
         afficher_position(p);
@@ -131,7 +131,7 @@ void afficher_position(Position *p)
         printf("Cette position n'existe pas\n");
     else
     {
-        printf("Ligne : %d, Ordre : %d, Phrase :%d\n", p->numero_ligne, p->ordre, p->numero_phrase);
+        printf("Ligne : %d, Ordre : %d, Phrase : %d\n", p->numero_ligne, p->ordre, p->numero_phrase);
     }
     return;
 }

@@ -15,9 +15,30 @@ ArbreBR *creer_abr() //COMPLET, A TESTER
     }
 }
 
-int is_equilibre(ArbreBR * arbre)
+int is_equilibre(ArbreBR * arbre) // renvoie 1 si equilibré, 0 sinon.
 {
-    ///A FAIRE
+    if(arbre->racine == NULL)
+        return 1;
+
+    ArbreBR *SAGauche = creer_abr();
+    ArbreBR *SADroit = creer_abr();
+    SAGauche->racine = arbre->racine->filsGauche;
+    SADroit->racine = arbre->racine->filsDroit;
+
+    if (equilibre(arbre) >= -1 && equilibre(arbre) <= 1 && is_equilibre(SAGauche) && is_equilibre(SADroit))
+        return 1;
+    else return 0;
+}
+
+int equilibre(ArbreBR *arbre)
+{
+    if(arbre->racine == NULL)
+        return 0;
+    ArbreBR *SAGauche = creer_abr();
+    ArbreBR *SADroit = creer_abr();
+    SAGauche->racine = arbre->racine->filsGauche;
+    SADroit->racine = arbre->racine->filsDroit;
+    return profondeur(SAGauche)- profondeur(SADroit);
 }
 
 
@@ -75,16 +96,39 @@ int inserer_noeud (NoeudABR **n, NoeudABR *noeud) // retourne 1 si nouveau mot, 
 
 NoeudABR *rechercher_noeud(ArbreBR *arbre, char *mot){ //COMPLET, A TESTER
     NoeudABR *x = arbre->racine;
-    while (strcasecmp(mot, x->mot) != 0 && x != NULL){ //tant qu'on n'a pas trouvé le mot et que l'arbre n'est pas fjni
-        if (strcasecmp(mot, x->mot) < 0){
-            x = x->filsGauche; //PEUT RENVOYER NULL SI L'ARBRE N'A PAS DE FG
-        }
-        else if (strcasecmp(mot, x->mot) > 0){
-            x = x->filsDroit; //PEUT RENVOYER NULL SI L'ARBRE N'A PAS DE FD
-        }
+    Position * pos ;
+    int i =1;
+
+    if (x==NULL)
+    {
+        printf("Le mot '%s' n'est pas dans l'arbre \n",mot);
+        return NULL;
     }
-    return x; //Si on sort de la boucle car on est arrivé au bout de l'arbre, on retourne x, qui vaut NULL. Sinon, on retourne le NoeudABR correspondant.
-}
+
+    if (strcasecmp(mot, x->mot) == 0)
+    {
+        printf("Position(s) de '%s' : \n", mot);
+        afficher_liste(x->positions);
+    }
+    else
+    {
+        ArbreBR *SADroit = creer_abr();
+        ArbreBR *SAGauche = creer_abr();
+        SADroit->racine = arbre->racine->filsDroit;
+        SAGauche->racine = arbre->racine->filsGauche;
+
+        if (strcasecmp(mot, x->mot) < 0)
+           return rechercher_noeud(SAGauche,mot); //PEUT RENVOYER NULL SI L'ARBRE N'A PAS DE FG
+
+        else //(strcasecmp(mot, x->mot) > 0)
+           return rechercher_noeud(SADroit,mot); //PEUT RENVOYER NULL SI L'ARBRE N'A PAS DE FD
+
+    }
+
+
+    }
+
+
 
 NoeudABR* creer_noeud(char* mot, int ligne, int ordre, int phrase)
 {

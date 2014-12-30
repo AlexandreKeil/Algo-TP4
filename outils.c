@@ -73,7 +73,7 @@ int charger_fichier(ArbreBR *arbre, char *filename){
 
             else if (c == '\n')
                 {
-                    phrase++;
+                    ligne++;
                     ordre=1;
                 }
 
@@ -100,6 +100,7 @@ void affichageMenu(){
     printf("6- Afficher les phrases contenant 2 mots\n");
     printf("7- Quitter\n");
     printf("Votre choix ? ");
+
 }
 
 
@@ -110,7 +111,7 @@ void menu()
 
 int choix;
 ArbreBR *a = 0;
-
+char mot[30];
 
 // AFFICHAGE DU MENU
     do
@@ -125,6 +126,7 @@ ArbreBR *a = 0;
         {
             printf("Choix invalide.\n");
             scanf("%d", &choix);
+            printf("\n\n");
         }
 
 
@@ -171,6 +173,36 @@ ArbreBR *a = 0;
             else
                 afficher_arbre(*a);
             break;
+
+        case 5: // RECHERCHE D'UN MOT
+            if (a == NULL)
+                printf("Veuillez d'abord creer un ABR (choix numero 1 du menu)\n\n");
+            else
+            {
+                printf("Veuillez rentrer le mot que vous recherchez (un seul mot sans espace): \n");
+                scanf("%s", &mot);
+
+                printf("\nVous avez rentre : %s\n", mot);
+                rechercher_noeud(a, mot);
+            }
+            break;
+
+        case 6: // RECHERCHE D'UNE PHRASE
+            /*
+        Recuper les deux mots
+
+        Noeaud x = rechercher_noeud(1er mot)
+
+        Noeud y = rechercher_noeud (2eme mot)
+
+        Traiter les positions des noeuds récupérer, voir si les deux mot sont dans une ou plusieurs même phrase
+
+            */
+           break;
+
+        case 7:
+            liberer_arbre(a); ///fonction a creer, suprimer les noeuds de chaque arbre
+                                /// (appel recursif de la fonction en supprimant les ss arbre droit et gauche ?)
 
         } //switch
 
