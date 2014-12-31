@@ -80,9 +80,11 @@ int charger_fichier(ArbreBR *arbre, char *filename){
             i++;
             c= getc(fichier);
         }
-        NoeudABR* noeud = creer_noeud(mot, ligne, ordre, phrase);
+        if (mot[0] != '\0')
+                { NoeudABR* noeud = creer_noeud(mot, ligne, ordre, phrase);
         ajouter_noeud(arbre, noeud);
         nb_mots++;
+                }
 
         fclose(fichier);
     }
@@ -98,7 +100,8 @@ void affichageMenu(){
     printf("4- Afficher tous les mots distincts par ordre alphabetique\n");
     printf("5- Rechercher un mot\n");
     printf("6- Afficher les phrases contenant 2 mots\n");
-    printf("7- Quitter\n");
+    printf("7- Reequilibrer l'arbre\n");
+    printf("8- Quitter\n");
     printf("Votre choix ? ");
 
 }
@@ -122,7 +125,7 @@ char mot[30];
         scanf("%d", &choix);
 
 //TEST DES ERREURS POSSIBLES
-        while(choix < 1 || choix > 7)
+        while(choix < 1 || choix > 8)
         {
             printf("Choix invalide.\n");
             scanf("%d", &choix);
@@ -153,7 +156,7 @@ char mot[30];
 
         case 3: //CARACTERISTIQUES DE L'ABR
             if (a == NULL)
-                printf("Veuillez d'abord creer un ABR (choix numero 1 du menu)\n\n");
+                printf("Veuillez d'abord creer un ABR (choix numero 1 du menu) et charger un fichier dans cet arbre (choix 2)\n\n");
             else
             {
                 printf("Voici les caracteristiques de l'ABR cree \n");
@@ -167,7 +170,7 @@ char mot[30];
 
         case 4 : // AFFICHER LES MOTS DISTINCTS
             if (a == NULL)
-                printf("Veuillez d'abord creer un ABR (choix numero 1 du menu)\n\n");
+                printf("Veuillez d'abord creer un ABR (choix numero 1 du menu) et charger un fichier dans cet arbre (choix 2)\n\n");
             else if (a->racine == NULL)
                 printf("L'arbre est vide\n");
             else
@@ -176,7 +179,7 @@ char mot[30];
 
         case 5: // RECHERCHE D'UN MOT
             if (a == NULL)
-                printf("Veuillez d'abord creer un ABR (choix numero 1 du menu)\n\n");
+                printf("Veuillez d'abord creer un ABR (choix numero 1 du menu) et charger un fichier dans cet arbre (choix 2)\n\n");
             else
             {
                 printf("Veuillez rentrer le mot que vous recherchez (un seul mot sans espace): \n");
@@ -187,6 +190,34 @@ char mot[30];
             }
             break;
 
+        case 7: // REEQUILIBRE DE L'ARBRE
+                ///NE FONCTIONNE PÄS
+             if (a == NULL)
+                printf("Veuillez d'abord creer un ABR (choix numero 1 du menu) et charger un fichier dans cet arbre (choix 2)\n\n");
+             else
+             {
+                ArbreBR* a_eq = creer_abr();
+                afficher_arbre(*a_eq);
+                reequilibre_tous(a, a_eq);
+                /* if (a_eq == NULL)
+                printf("Veuillez d'abord creer un ABR (choix numero 1 du menu) et charger un fichier dans cet arbre (choix 2)\n\n");
+                else
+                {
+                printf("Voici les caracteristiques de l'ABR cree \n");
+                printf("Nombre de noeuds : %d\n", a_eq->nb_mots_differents);
+                printf("Profondeur : %d\n", profondeur(a_eq));
+                if (is_equilibre(a_eq) == 1)
+                    printf("L'ABR est equilibre\n");
+                else printf("L'ABR n'est pas equilibre\n");
+                }*/
+
+                a= a_eq;
+                printf("L'arbre a ete reequilibre\n");
+             }
+
+
+        break;
+/*
         case 6: // RECHERCHE D'UNE PHRASE
             /*
         Recuper les deux mots
@@ -197,17 +228,19 @@ char mot[30];
 
         Traiter les positions des noeuds récupérer, voir si les deux mot sont dans une ou plusieurs même phrase
 
-            */
+
            break;
 
         case 7:
             liberer_arbre(a); ///fonction a creer, suprimer les noeuds de chaque arbre
                                 /// (appel recursif de la fonction en supprimant les ss arbre droit et gauche ?)
 
+  */
+
         } //switch
 
 }
-    while (choix !=7);
+    while (choix !=8);
 
     return;
 
