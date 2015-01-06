@@ -135,3 +135,10 @@ void afficher_position(Position *p)
     }
     return;
 }
+
+void liberer_position(Position *p){
+    if (p->suivant != NULL){
+        liberer_position(p->suivant);
+    }
+    free(p);
+}

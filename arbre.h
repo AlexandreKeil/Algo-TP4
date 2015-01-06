@@ -42,4 +42,6 @@ ArbreBR* RG(ArbreBR* arbre);
 ArbreBR* RGD(ArbreBR* arbre);
 ArbreBR* reequilibre(ArbreBR *arbre);
 NoeudABR *copie_noeud(NoeudABR *n);
+void liberer_arbre(ArbreBR *a);
+void liberer_noeud(NoeudABR *n);
 #endif // ARBRE_H_INCLUDED

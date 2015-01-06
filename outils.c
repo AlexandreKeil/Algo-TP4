@@ -28,15 +28,18 @@ int min(int a,int b)
     return (a + b - fabs(a-b) ) / 2;
 }
 
-int charger_fichier(ArbreBR *arbre, char *filename){
+int charger_fichier(ArbreBR *arbre, char *filename)
+{
     FILE* fichier= fopen(filename, "r"); // pointeur sur le fichier ouvert
     char c;
     int nb_mots = 0;
-    if (fichier == NULL){
+    if (fichier == NULL)
+    {
         printf("Erreur d'ouverture du fichier\n");
         return -1;
     }
-    else {
+    else
+    {
         int phrase = 1;
         int ligne = 1;
         int ordre = 1;
@@ -52,9 +55,9 @@ int charger_fichier(ArbreBR *arbre, char *filename){
 
 
             if (c == ' ' || c == '.' || c == '\n')
-                {
+            {
                 if (mot[0] != '\0')
-                    {
+                {
                     NoeudABR* noeud = creer_noeud(mot, ligne, ordre, phrase);
                     ajouter_noeud(arbre, noeud);
                     ordre++;
@@ -62,9 +65,9 @@ int charger_fichier(ArbreBR *arbre, char *filename){
                         mot[j] = '\0';
 
                     nb_mots++;
-                    }
-                i=-1;
                 }
+                i=-1;
+            }
 
             else mot[i] = c;
 
@@ -72,26 +75,28 @@ int charger_fichier(ArbreBR *arbre, char *filename){
                 phrase++;
 
             else if (c == '\n')
-                {
-                    ligne++;
-                    ordre=1;
-                }
+            {
+                ligne++;
+                ordre=1;
+            }
 
             i++;
             c= getc(fichier);
         }
         if (mot[0] != '\0')
-                { NoeudABR* noeud = creer_noeud(mot, ligne, ordre, phrase);
-        ajouter_noeud(arbre, noeud);
-        nb_mots++;
-                }
+        {
+            NoeudABR* noeud = creer_noeud(mot, ligne, ordre, phrase);
+            ajouter_noeud(arbre, noeud);
+            nb_mots++;
+        }
 
         fclose(fichier);
     }
     return nb_mots;
 }
 
-void affichageMenu(){
+void affichageMenu()
+{
     printf("\n");
     printf("MENU\n");
     printf("1- Creer un ABR\n");
@@ -112,9 +117,9 @@ void affichageMenu(){
 void menu()
 {
 
-int choix;
-ArbreBR *a = 0;
-char mot[30];
+    int choix;
+    ArbreBR *a = 0;
+    char mot[30], motRech1[30], motRech2[30];
 
 // AFFICHAGE DU MENU
     do
@@ -190,9 +195,53 @@ char mot[30];
             }
             break;
 
+        case 6: //AFFICHER LES PHRASES CONTENANT 2 MOTS SAISIS
+            printf("Entrez les 2 mots a rechercher en les separant d'un espace.\n");
+            scanf("%s %s", motRech1, motRech2);
+            NoeudABR* noeudmot1;
+            NoeudABR* noeudmot2;
+
+            noeudmot1 = rechercher_noeud(a, motRech1);
+            noeudmot2 = rechercher_noeud(a, motRech2);
+
+            Position* positionMot1;
+            Position* positionMot2;
+            positionMot1 = noeudmot1->positions.debut;
+            while (positionMot1 != NULL)
+            {
+                positionMot2 = noeudmot2->positions.debut;
+                while (positionMot2 != NULL)
+                {
+                    if (positionMot1->numero_phrase == positionMot2->numero_phrase)
+                    {
+                        //Récupération phrase
+                    }
+                    positionMot2 = positionMot2->suivant;
+                }
+                positionMot1 = positionMot1->suivant;
+            }
+
+            free(positionMot1);
+            free(positionMot2);
+            free(noeudmot1);
+            free(noeudmot2);
+
+            /*
+            Recuper les deux mots
+
+            Noeaud x = rechercher_noeud(1er mot)
+
+            Noeud y = rechercher_noeud (2eme mot)
+
+            Traiter les positions des noeuds récupérer, voir si les deux mot sont dans une ou plusieurs même phrase
+
+
+            break;
+            */
+
         case 7: // REEQUILIBRE DE L'ARBRE
-                ///NE FONCTIONNE PÄS
-             if (a == NULL)
+            ///NE FONCTIONNE PÄS
+            /* if (a == NULL)
                 printf("Veuillez d'abord creer un ABR (choix numero 1 du menu) et charger un fichier dans cet arbre (choix 2)\n\n");
              else
              {
@@ -211,35 +260,18 @@ char mot[30];
                 else printf("L'ABR n'est pas equilibre\n");
                 }*/
 
-                a= a_eq;
-                printf("L'arbre a ete reequilibre\n");
-             }
+            //a= a_eq;
+            printf("L'arbre a ete reequilibre\n");
+            break;
 
-
-        break;
-/*
-        case 6: // RECHERCHE D'UNE PHRASE
-            /*
-        Recuper les deux mots
-
-        Noeaud x = rechercher_noeud(1er mot)
-
-        Noeud y = rechercher_noeud (2eme mot)
-
-        Traiter les positions des noeuds récupérer, voir si les deux mot sont dans une ou plusieurs même phrase
-
-
-           break;
-
-        case 7:
+        case 8:
             liberer_arbre(a); ///fonction a creer, suprimer les noeuds de chaque arbre
-                                /// (appel recursif de la fonction en supprimant les ss arbre droit et gauche ?)
+            /// (appel recursif de la fonction en supprimant les ss arbre droit et gauche ?)
 
-  */
 
         } //switch
 
-}
+    }
     while (choix !=8);
 
     return;

@@ -1,8 +1,8 @@
 #include "arbre.h"
 #include "liste.h"
 
-ArbreBR *creer_abr() //COMPLET, A TESTER
-{
+ArbreBR *creer_abr(){ //COMPLET, A TESTER
+
     ArbreBR *a = (ArbreBR*)malloc(sizeof(ArbreBR));
     if (a == NULL)
         return NULL;
@@ -456,3 +456,19 @@ ArbreBR* reequilibre(ArbreBR *arbre) /// fonctionne pour un arbre petit (premier
 
 }
 
+void liberer_arbre(ArbreBR *a){
+    NoeudABR* noeudRac = a->racine;
+    liberer_noeud(noeudRac);
+    free(a);
+}
+
+void liberer_noeud(NoeudABR *n){
+    if (n->filsGauche != NULL){
+        liberer_noeud(n->filsGauche);
+    }
+    if (n->filsDroit != NULL){
+        liberer_noeud(n->filsDroit);
+    }
+    liberer_position(n->positions.debut);
+    free(n);
+}
